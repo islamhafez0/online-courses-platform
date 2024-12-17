@@ -14,17 +14,28 @@ const generateSignedUrl = publicId => {
 };
 
 exports.getAllCourses = expressAsyncHandler(async (req, res, next) => {
-  const courses = await Course.find();
-  if (!courses || courses.length === 0) {
-    return next(new AppError('No courses found', 404));
+  console.log('Enter from database');
+
+  try {
+    const courses = await Course.find();
+    console.log('Courses retrieved:', courses);
+
+    if (!courses || courses.length === 0) {
+      return next(new AppError('No courses found', 404));
+    }
+
+    console.log('Exit from database');
+    res.status(200).json({
+      status: 'success',
+      results: courses.length,
+      data: {
+        courses,
+      },
+    });
+  } catch (err) {
+    console.error('Error fetching courses:', err);
+    return next(new AppError('Error fetching courses', 500));
   }
-  res.status(200).json({
-    status: 'success',
-    results: courses.length,
-    data: {
-      courses,
-    },
-  });
 });
 
 exports.uploadVideo = expressAsyncHandler(async (req, res, next) => {

@@ -12,7 +12,7 @@ router.use(authController.protect);
 router.get('/getLesson/:courseId/:moduleId/:lessonId', courseController.getLesson);
 router.get('/filter', courseController.getCoursesByCategoryOrTag);
 
-router.use(authorization.restrictTo('admin', 'instructor'));
+router.use(authorization.restrictTo('admin', 'instructor', 'student'));
 
 router.route('/').get(courseController.getAllCourses);
 router.post('/initCourse', courseController.initCourse);

@@ -27,19 +27,27 @@ exports.signUp = expressAsyncHandler(async (req, res, next) => {
       message: 'Passwords do not match',
     });
   }
-  const user = await User.create({
-    userName: req.body.userName,
-    fristName: req.body.fristName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm,
-  });
-  createSendToken(user, 201, res);
+  try {
+    const user = await User.create({
+      username: req.body.username,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      passwordConfirm: req.body.passwordConfirm,
+      role: req.body.role,
+    });
+    createSendToken(user, 201, res);
+  } catch (error) {
+    console.error('Error creating user:', error);
+    return res.status(500).json({
+      status: 'error',
+      message: error.errmsg,
+    });
+  }
 });
 
 exports.logIn = expressAsyncHandler(async (req, res, next) => {
-  console.log(req.body);
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(400).json({
@@ -59,6 +67,9 @@ exports.logIn = expressAsyncHandler(async (req, res, next) => {
 
 exports.protect = expressAsyncHandler(async (req, res, next) => {
   let token;
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
   if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
