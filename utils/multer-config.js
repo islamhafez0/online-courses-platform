@@ -16,9 +16,8 @@ const storage = (folder, type, format) => {
     params: {
       folder: folder,
       resource_type: type,
-      format: async (req, file) => format,
+      format: async () => format,
       public_id: (req, file) => {
-        // Generate a unique public_id
         const uniqueId = uuidv4();
         const fileNameWithoutExtension = file.originalname.split('.')[0];
         return `${fileNameWithoutExtension}-${uniqueId}`;

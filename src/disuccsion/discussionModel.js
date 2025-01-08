@@ -1,4 +1,28 @@
 const mongoose = require('mongoose');
+
+// Schema for Discussion Replies
+const replySchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  {
+    _id: false, // Prevent creation of an additional ID field for replies
+  }
+);
+
+// Schema for Discussions
 const discussionSchema = new mongoose.Schema(
   {
     belong: {
@@ -14,31 +38,20 @@ const discussionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    replies: [
-      {
-        user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'User',
-          required: true,
-        },
-        content: {
-          type: String,
-          required: true,
-        },
-        createdAt: {
-          type: Date,
-          default: Date.now,
-        },
-      },
-    ],
+    replies: [replySchema], // Use the replies schema defined above
     likes: {
       type: Number,
       default: 0,
     },
-    likedBy: [mongoose.Schema.Types.ObjectId],
+    likedBy: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
-    timestamps: true,
+    timestamps: true, // Adds createdAt and updatedAt fields
   }
 );
 

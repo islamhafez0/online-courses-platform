@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const app = require('./app');
-dotenv.config();
+dotenv.config({ path: './config.env' });
+
+const DB = process.env.DATABASE_LOCAL;
 
 const port = process.env.PORT || 7000;
-mongoose.connect(process.env.DATABASE).then(() => {
+
+mongoose.connect(DB).then(() => {
   // eslint-disable-next-line no-console
   console.log('Database connected successfully');
   const server = app.listen(port, () => {

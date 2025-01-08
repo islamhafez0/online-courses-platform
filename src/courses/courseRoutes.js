@@ -9,17 +9,53 @@ const router = express.Router();
 
 router.use(authController.protect);
 
-router.get('/getLesson/:courseId/:moduleId/:lessonId', courseController.getLesson);
-router.get('/filter', courseController.getCoursesByCategoryOrTag);
 
-router.use(authorization.restrictTo('admin', 'instructor', 'student'));
 
-router.route('/').get(courseController.getAllCourses);
-router.post('/initCourse', courseController.initCourse);
-router.post('/createModuleForCourse/:courseId', courseController.createModuleForCourse);
-router.post('/createLesson/:courseId/:moduleId', uploadVideo.single('video'), courseController.createLesson);
-router.patch('/updateCourse/:courseId', courseController.updateCourse);
+router.get(
+  '/getLesson/course/:courseId/module/:moduleId/lesson/:lessonId',
+  authorization.authLessons,
+  courseController.getLesson,
+); //t
+router.get('/filter', courseController.filterCourse); //t
 
-router.route('/upload').post(uploadVideo.single('video'), courseController.uploadVideo);
+//course
+router.route('/').get(courseController.getAllCourses); //t
+router.post('/initCourse', authorization.restrictTo('admin', 'instructor'), courseController.initCourse); //t
+router.patch('/updateCourse/:courseId', authorization.authCourses, courseController.updateCourse); //t
+router.delete('/deleteCourse/:courseId', authorization.authCourses, courseController.deleteCourse); //t
+//module
+router.post('/createModuleForCourse/:courseId', authorization.authCourses, courseController.createModuleForCourse); //t
+router.patch(
+  '/updateModuleForCourse/:courseId/module/:moduleId',
+  authorization.authCourses,
+  courseController.updateModuleForCourse,
+); //t
+router.delete(
+  '/deleteModuleForCourse/:courseId/module/:moduleId',
+  authorization.authCourses,
+  courseController.deleteModuleForCourse,
+); //t
+
+//lesson
+router.post(
+  '/createLesson/course/:courseId/module/:moduleId',
+  authorization.authCourses,
+  uploadVideo.single('video'),
+  courseController.createLesson,
+); //t
+router.patch(
+  '/updateLesson/course/:courseId/module/:moduleId/lesson/:lessonId',
+  authorization.authCourses,
+  uploadVideo.single('video'),
+  courseController.updateLesson,
+); //t
+router.delete(
+  '/deleteLesson/course/:courseId/module/:moduleId/lesson/:lessonId',
+  authorization.authCourses,
+  courseController.deleteLesson,
+); //t
+router
+  .route('/upload')
+  .post(authorization.restrictTo('admin', 'instructor'), uploadVideo.single('video'), courseController.uploadVideo); //t
 
 module.exports = router;

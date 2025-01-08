@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const AppError = require('./utils/appError');
@@ -10,7 +9,6 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -21,16 +19,20 @@ app.set('views', path.join(__dirname, 'views'));
 // Define routes
 const usersRoutes = require('./src/users/usersRoutes');
 const courseRoutes = require('./src/courses/courseRoutes');
-const paymentRoutes = require('./src/payment/paymentRoutes');
+// const paymentRoutes = require('./src/payment/paymentRoutes');z
 const discussionRoutes = require('./src/disuccsion/discussionRoute');
+const quizeRoutes =  require('./src/quiz/quizRoute');
+
 
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.use('/api/v1/users', usersRoutes);
-app.use('/api/v1/courses', courseRoutes);
-app.use('/api/v1/payment', paymentRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/courses', courseRoutes);
+app.use('/api/discussion',discussionRoutes)
+app.use('/api/quize',quizeRoutes)
+// app.use('/api/payment', paymentRoutes);
 // Global error handling middleware
 
 // Handle undefined routes

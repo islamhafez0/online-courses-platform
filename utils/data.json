@@ -1,0 +1,181 @@
+/* course */
+{
+    "title": "Mastering Full-Stack Development",
+    "description": "A comprehensive course on full-stack web development using modern frameworks.",
+    "instructor": "63f1f72c2c45e0001725f8b1",
+    "duration": 180,
+    "level": "Advanced",
+    "modules": [
+      "63f1f72c2c45e0001725f8b2",
+      "63f1f72c2c45e0001725f8b3"
+    ],
+    "categories": ["Web Development", "Programming"],
+    "tags": ["JavaScript", "React", "Node.js"],
+    "price": 299.99,
+    "ratings": 4.8,
+    "language": "English",
+    "enrolledStudents": ["63f1f72c2c45e0001725f8b4", "63f1f72c2c45e0001725f8b5"]
+  }
+
+  //modules  
+  [
+    {
+      "title": "Frontend Essentials",
+      "order": 1,
+      "lessons": [
+        "63f1f72c2c45e0001725f8b6",
+        "63f1f72c2c45e0001725f8b7"
+      ]
+    },
+    {
+      "title": "Backend Basics",
+      "order": 2,
+      "lessons": [
+        "63f1f72c2c45e0001725f8b8",
+        "63f1f72c2c45e0001725f8b9"
+      ]
+    }
+  ]
+
+  //lessons 
+  [
+    {
+      "title": "Introduction to HTML",
+      "discussion": ["63f1f72c2c45e0001725f8c1"],
+      "duration": 15,
+      "videoUrl": "https://example.com/html-intro",
+      "order": 1
+    },
+    {
+      "title": "CSS Fundamentals",
+      "discussion": ["63f1f72c2c45e0001725f8c2"],
+      "duration": 20,
+      "videoUrl": "https://example.com/css-fundamentals",
+      "order": 2
+    },
+    {
+      "title": "JavaScript Basics",
+      "discussion": ["63f1f72c2c45e0001725f8c3"],
+      "duration": 30,
+      "videoUrl": "https://example.com/javascript-basics",
+      "order": 3
+    }
+  ]
+//user
+[
+    {
+      "_id": "63f1f72c2c45e0001725f8b1",
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "role": "Instructor"
+    },
+    {
+      "_id": "63f1f72c2c45e0001725f8b4",
+      "name": "Jane Smith",
+      "email": "janesmith@example.com",
+      "role": "Student"
+    }
+  ]
+  
+  //discussion
+  [
+    {
+      "belong": "63f1f72c2c45e0001725f8b4",
+      "title": "What is the best practice for HTML structure?",
+      "content": "I'm looking for guidelines to create semantic HTML structure.",
+      "replies": [
+        {
+          "user": "63f1f72c2c45e0001725f8b1",
+          "content": "Make sure to use header tags properly and avoid unnecessary divs.",
+          "createdAt": "2025-01-01T12:00:00Z"
+        }
+      ],
+      "likes": 5,
+      "likedBy": ["63f1f72c2c45e0001725f8b4", "63f1f72c2c45e0001725f8b5"]
+    }
+  ]
+  ////////////////
+  {
+    "title": "Module 3: Introduction to DB",
+    "description": "This quiz covers the basics of programming, including variables, loops, and functions.",
+    "questions": [
+      {
+        "questionText": "What is the result of 2 + 2?",
+        "options": [
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "correctOption": 1
+      },
+      {
+        "questionText": "Which of the following is a loop structure in programming?",
+        "options": [
+          "if statement",
+          "for loop",
+          "try-catch block",
+          "function"
+        ],
+        "correctOption": 1
+      },
+      {
+        "questionText": "Which of these is used to define a function in JavaScript?",
+        "options": [
+          "function()",
+          "define()",
+          "create()",
+          "init()"
+        ],
+        "correctOption": 0
+      }
+    ]
+  }
+  /////
+  {
+    "title": "Final Exam: Web Development Fundamentals",
+    "description": "This is the final exam for the Web Development Fundamentals course. It covers all topics discussed during the course.",
+    "questions": [
+      {
+        "questionText": "What is the purpose of the HTML `<head>` tag?",
+        "options": [
+          "To define the body content of the page",
+          "To include metadata and links to stylesheets",
+          "To define the main content of the page",
+          "To display the title of the page"
+        ],
+        "correctOption": 1
+      },
+      {
+        "questionText": "Which CSS property is used to change the text color?",
+        "options": [
+          "color",
+          "font-size",
+          "text-align",
+          "background-color"
+        ],
+        "correctOption": 0
+      },
+      {
+        "questionText": "Which JavaScript method is used to select an HTML element by its ID?",
+        "options": [
+          "getElementById()",
+          "querySelector()",
+          "getElementsByClassName()",
+          "querySelectorAll()"
+        ],
+        "correctOption": 0
+      },
+      {
+        "questionText": "Which of the following is used to add a comment in JavaScript?",
+        "options": [
+          "// This is a comment",
+          "# This is a comment",
+          "<!-- This is a comment -->",
+          "/* This is a comment */"
+        ],
+        "correctOption": 0
+      }
+    ]
+  }
+  

@@ -7,15 +7,11 @@ const authorization=require('../../middleware/authorization')
 
 
 router.use(authController.protect);
-router.post('/createdisuccsion/:lessonId', discussionController.createDiscussion);
-router.get('/discussions', discussionController.getAllDiscussions);
-
-router.get('/getdiscussion/:lessonId', discussionController.getDiscussionsForLesson);
-router.delete('/:discussionId',authorization.restrictTo('admin', 'instructor') ,discussionController.deleteDiscussion);
-
-router.post('/replytodiscussion/:discussionId', discussionController.addReplyToDiscussion);
-
-
-router.post('/like/:discussionId', discussionController.likeOrUnlikeDiscussion);
+router.post('/createDisuccsion/:lessonId',authorization.authDiscussion, discussionController.createDiscussionforLesson);//T
+router.get('/',authorization.restrictTo('admin') ,discussionController.getAllDiscussions);//T
+router.get('/getDiscussion/:lessonId',authorization.authDiscussion, discussionController.getDiscussionsForLesson);//T
+router.delete('/deleteDiscussion/:discussionId',authorization.restrictTo('admin', 'instructor') ,discussionController.deleteDiscussion);//T
+router.post('/replytodiscussion/:discussionId',authorization.authReplyOrLike, discussionController.addReplyToDiscussion);
+router.post('/like/:discussionId',authorization.authReplyOrLike, discussionController.likeOrUnlikeDiscussion);
 
 module.exports = router;

@@ -4,18 +4,10 @@ const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    userName: {
       type: String,
       required: [true, 'Please provide a username'],
       unique: true,
-    },
-    firstName: {
-      type: String,
-      required: [true, 'Please provide a first name'],
-    },
-    lastName: {
-      type: String,
-      required: [true, 'Please provide a last name'],
     },
     email: {
       type: String,
@@ -51,9 +43,9 @@ const userSchema = new mongoose.Schema(
         message: 'Passwords are not the same!',
       },
     },
+    resetOtp: { type: String, default: '' },
+    resetOtpExpireAt: { type: Number, default: 0 },
     passwordChangedAt: Date,
-    passwordResetToken: String,
-    passwordResetExpires: Date,
     active: {
       type: Boolean,
       default: true,
@@ -72,6 +64,7 @@ userSchema.pre('save', async function (next) {
   this.passwordConfirm = undefined;
   next();
 });
+
 userSchema.pre('save', function (next) {
   if (!this.isModified('password') || this.isNew) return next();
   this.passwordChangedAt = Date.now() - 1000;
