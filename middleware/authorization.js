@@ -1,5 +1,5 @@
 const { default: mongoose } = require('mongoose');
-const Course= require('../src/courses/courseModel');
+const Course = require('../src/courses/courseModel');
 const Discussion = require('../src/disuccsion/discussionModel');
 const AppError = require('../utils/appError');
 const Quiz = require('../src/quiz/quizModel');
@@ -242,7 +242,7 @@ exports.authGetAndSubmitQuiz = async (req, res, next) => {
     return next(new AppError('Quiz must provide', 400));
   }
 
-  const quiz =await Quiz.findById(quizId);
+  const quiz = await Quiz.findById(quizId);
   if (!quiz) {
     return next(new AppError('Quiz dont find', 400));
   }
@@ -262,7 +262,32 @@ exports.authGetAndSubmitQuiz = async (req, res, next) => {
 
   return next(new AppError('You do not have permission to perform this action', 403));
 };
+exports.authPayment = async (req, res, next) => {
+  const user = req.user;
+  // Ensure the user is authenticated
+  if (!user) {
+    return next(new AppError('User authentication failed', 401));
+  }
 
+  const { paymentId } = req.params;
+
+  // Validate paymentId
+  if (!paymentId) {
+    return next(new AppError('Payment ID must be provided', 400));
+  }
+
+  // Find the payment by ID
+  const payment = await Payment.findById(paymentId);
+  if (!payment) {
+    return next(new AppError('Payment not found', 404));
+  }
+
+  if (user.role === 'admin' || user._id.equals(payment.user)) {
+    return next(); // User is authorized
+  }
+
+  return next(new AppError('You do not have permission to perform this action', 403));
+};
 exports.restrictTo =
   (...roles) =>
   (req, res, next) => {

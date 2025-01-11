@@ -26,8 +26,8 @@ const handelJWTError = err => {
 const handleJWTExpiredError = () => new AppError('Your token has expired! Please log in again.', 401);
 
 const sendErrorDev = (err, res) => {
-  if (err.name == 'CastError') err = handelCastErrorDB(err);
-  if (err.code == 11000) err = handelDuplicateFailedsDB(err);
+  // if (err.name == 'CastError') err = handelCastErrorDB(err);
+  // if (err.code == 11000) err = handelDuplicateFailedsDB(err);
   if (err.name == 'ValidationError') err = handelValidationErrorDB(err);
   if (err.name == 'JsonWebTokenError') err = handelJWTError(err);
   if (err.name === 'TokenExpiredError') err = handleJWTExpiredError();

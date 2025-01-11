@@ -1,4 +1,5 @@
-const progressSchema = new mongoose.Schema({
+const progressSchema = new mongoose.Schema(
+  {
     student: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -9,31 +10,33 @@ const progressSchema = new mongoose.Schema({
       ref: 'Course',
       required: true,
     },
-    quizResults: [{
-      quiz: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Quiz',
-        required: true,
+    quizResults: [
+      {
+        quiz: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Quiz',
+          required: true,
+        },
+        score: {
+          type: Number,
+          required: true,
+        },
+        totalQuestions: {
+          type: Number,
+          required: true,
+        },
+        submittedAt: {
+          type: Date,
+          default: Date.now,
+        },
       },
-      score: {
-        type: Number,
-        required: true,
-      },
-      totalQuestions: {
-        type: Number,
-        required: true,
-      },
-      submittedAt: {
-        type: Date,
-        default: Date.now,
-      },
-    }],
+    ],
     overallProgress: {
       type: Number, // Percentage of completion
       default: 0,
     },
-  }, { timestamps: true });
-  
-  const Progress = mongoose.model('Progress', progressSchema);
-  module.exports = { Progress };
-  
+  },
+  { timestamps: true },
+);
+
+module.exports.Progress = mongoose.model('Progress', progressSchema);

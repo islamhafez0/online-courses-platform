@@ -19,10 +19,9 @@ app.set('views', path.join(__dirname, 'views'));
 // Define routes
 const usersRoutes = require('./src/users/usersRoutes');
 const courseRoutes = require('./src/courses/courseRoutes');
-// const paymentRoutes = require('./src/payment/paymentRoutes');z
+const paymentRoutes = require('./src/payment/paymentRoutes');
 const discussionRoutes = require('./src/disuccsion/discussionRoute');
-const quizeRoutes =  require('./src/quiz/quizRoute');
-
+const quizeRoutes = require('./src/quiz/quizRoute');
 
 app.get('/', (req, res) => {
   res.render('index');
@@ -30,9 +29,9 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', usersRoutes);
 app.use('/api/courses', courseRoutes);
-app.use('/api/discussion',discussionRoutes)
-app.use('/api/quize',quizeRoutes)
-// app.use('/api/payment', paymentRoutes);
+app.use('/api/discussion', discussionRoutes);
+app.use('/api/quize', quizeRoutes);
+app.use('/api/payment', paymentRoutes);
 // Global error handling middleware
 
 // Handle undefined routes
