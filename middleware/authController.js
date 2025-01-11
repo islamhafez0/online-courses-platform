@@ -63,6 +63,53 @@ exports.logIn = expressAsyncHandler(async (req, res, next) => {
   }
   createSendToken(user, 200, res);
 });
+//logout
+const jwt = require('jsonwebtoken');
+
+exports.logout = expressAsyncHandler(async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+
+    if (!token) {
+      return res.status(401).json({
+        status: 'fail',
+        message: 'You are not logged in!',
+      });
+    }
+    // Decode the token without verifying to extract its payload
+    const decoded = jwt.decode(token);
+    if (!decoded) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Invalid token!',
+      });
+    }
+
+    // Create a new token with the same payload but an expired time
+    const expiredToken = jwt.sign(
+      { id: decoded.id },
+      process.env.JWT_SECRET,
+      { expiresIn: '1s' }, // Immediate expiration
+    );
+
+    // Set the expired token in the cookie
+    res.cookie('jwt', expiredToken, {
+      expires: new Date(Date.now() + 1000), // Cookie expires in 1 second
+      httpOnly: true,
+      sameSite: 'strict',
+    });
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'You have been logged out!',
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: 'error',
+      message: 'Something went wrong during logout!',
+    });
+  }
+});
 
 exports.protect = expressAsyncHandler(async (req, res, next) => {
   let token;

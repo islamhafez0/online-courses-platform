@@ -10,6 +10,7 @@ router.post('/signUp', authController.signUp); //T
 router.post('/logIn', authController.logIn); //T
 
 router.use(authController.protect);
+router.post('/logout', authController.protect, authController.logout);
 router.post('/forgotpassword', authController.forgotPassword);
 router.post('/resetpassword', authController.resetPassword);
 
@@ -20,5 +21,5 @@ router.patch('/updateUser/:id', userController.updateUser); //T
 router.delete('/deleteUser/:id', userController.deleteUser); //T
 
 //git cources for user
-router.get('/userCources/:userId',userController.getCoursesForUser)
+router.get('/userCources/:userId', userController.getCoursesForUser);
 module.exports = router;
