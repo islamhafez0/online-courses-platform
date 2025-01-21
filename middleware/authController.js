@@ -64,7 +64,6 @@ exports.logIn = expressAsyncHandler(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 //logout
-const jwt = require('jsonwebtoken');
 
 exports.logout = expressAsyncHandler(async (req, res) => {
   try {
